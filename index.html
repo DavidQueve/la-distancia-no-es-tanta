@@ -1,33 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>¿Quieres ser mi novia?</title>
+
+  <!-- Fuente romántica de Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Comic Sans MS', cursive;
-      text-align: center;
-      background: linear-gradient(to bottom right, #e6ccff, #ffffff);
-      color: #5e2a84;
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+      font-family: 'Dancing Script', cursive;
+      background: linear-gradient(135deg, #e6ccff 0%, #ffffff 100%);
+      color: #5e2a84;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    h1, h2 {
-      color: #6a0dad;
-    }
-
-    .intro {
-      padding: 50px 20px 0;
-      max-width: 800px;
-      margin: 0 auto;
-      font-size: 1.4rem;
-      line-height: 1.8;
-      color: #4b0082;
+    body {
+      min-height: 100vh;
     }
 
     .container {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      background: #f0e6ffcc;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #b993f8aa;
+      user-select: none;
+      text-align: center;
+    }
+
+    .phrases {
+      width: 100%;
+      font-size: 2rem;
+      line-height: 1.4;
+      color: #4b0082;
+      padding: 30px 20px;
+      border-radius: 15px;
+      background: #ffffffcc;
+      box-shadow: 0 0 20px #b993f8aa;
+      min-height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .phrases > div {
+      display: none;
+      max-width: 650px;
+      color: #4b0082; /* asegurar color visible */
+      font-weight: 400; /* normal base */
+    }
+
+    .phrases > div.active {
+      display: block;
+      opacity: 1;
+      transition: opacity 0.8s ease;
+    }
+
+    .title-section {
+      display: none;
       margin-top: 30px;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .title-section h1 {
+      margin-bottom: 5px;
+      color: #6a0dad;
+      font-size: 2.8rem;
+    }
+
+    .title-section p {
+      font-size: 1.5rem;
+      color: #6a0dad;
+      margin-top: 0;
+      margin-bottom: 40px;
+      font-weight: 600;
     }
 
     .carousel {
@@ -38,7 +100,9 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      min-height: 380px;
+      min-height: 300px;
+      display: none;
+      animation: fadeIn 1s ease forwards;
     }
 
     .carousel img {
@@ -47,54 +111,68 @@
       border-radius: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       display: none;
-      transition: opacity 0.5s ease;
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
     .carousel img.active {
       display: block;
+      opacity: 1;
     }
 
     #nextBtn {
       margin-top: 30px;
-      padding: 10px 25px;
-      font-size: 1.2rem;
+      padding: 14px 32px;
+      font-size: 1.6rem;
       border: none;
-      border-radius: 15px;
+      border-radius: 25px;
       background-color: #c084fc;
       color: white;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(192, 132, 252, 0.5);
+      box-shadow: 0 6px 15px rgba(192, 132, 252, 0.8);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      user-select: none;
     }
 
     #nextBtn:hover {
       background-color: #a855f7;
+      transform: scale(1.05);
     }
 
     .question-section {
       display: none;
       margin-top: 60px;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .question-section h1 {
+      font-size: 3rem;
+      color: #7e22ce;
+      margin-bottom: 20px;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 20px;
+      gap: 30px;
       margin-top: 20px;
     }
 
     button {
-      font-size: 1.5rem;
-      padding: 12px 28px;
+      font-size: 1.8rem;
+      padding: 14px 32px;
       border: none;
-      border-radius: 20px;
+      border-radius: 30px;
       cursor: pointer;
       transition: 0.3s;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(192, 132, 252, 0.5);
     }
 
     #yesBtn {
       background-color: #c084fc;
       color: white;
-      box-shadow: 0 4px 10px rgba(192, 132, 252, 0.5);
     }
 
     #yesBtn:hover {
@@ -104,42 +182,77 @@
     #noBtn {
       background-color: #d8b4fe;
       color: #5e2a84;
+      position: relative;
     }
 
     #mensaje {
-      margin-top: 30px;
-      font-size: 1.9rem;
+      margin-top: 40px;
+      font-size: 2rem;
       color: #7e22ce;
+      font-weight: 700;
       display: none;
+    }
+
+    /* Negrita para palabras clave */
+    .highlight {
+      font-weight: 900;
+      color: #9b30ff;
+      text-shadow: 0 0 4px #c085fc88;
+    }
+
+    /* Animación fadeIn */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
 
-  <!-- ✨ INTRO CON FRASE ROMÁNTICA -->
-  <div class="intro">
-    <h2>Desde Panamá hasta Venezuela... 💌</h2>
-    <p>
-      Aunque nos separan kilómetros de distancia, nada se compara con lo que nos une.  
-      Cada palabra, cada mirada por videollamada, cada risa compartida ha hecho que mi amor por ti crezca más allá de fronteras.
-      <br><br>
-      Hoy quiero compartirte algo especial... nuestros momentos 🥰
-    </p>
-  </div>
-
-  <!-- 💜 CARRUSEL DE FOTOS -->
   <div class="container">
-    <h1>Nuestros momentos 💜</h1>
-    <div class="carousel">
-      <img src="img/img1.jpeg" class="active" alt="Foto 1">
-      <img src="img/img2.jpeg" alt="Foto 2">
-      <img src="img/img3.jpeg" alt="Foto 3">
-      <!-- Puedes añadir más fotos aquí -->
+
+    <!-- Frases románticas que irán pasando -->
+    <div class="phrases" id="phrases">
+      <div class="active">
+        Hola <span class="highlight">Mau</span>, desde Panamá hasta Venezuela...
+      </div>
+      <div>
+        Tu sonrisa es lo más <span class="highlight">hermoso</span> que he visto jamás.
+      </div>
+      <div>
+        Aunque estemos lejos, nuestro <span class="highlight">amor</span> es más grande que cualquier distancia.
+      </div>
+      <div>
+        Cada <span class="highlight">pensamiento</span> está contigo, y quiero compartir contigo nuestros momentos 🥰
+      </div>
+      <div>
+        Nuestro <span class="highlight">aniversario</span> es el <span class="highlight">7 de marzo</span> porque tan solo me tomó <span class="highlight">5 días</span> enamorarme de ti.
+      </div>
+      <div>
+        Hoy, <span class="highlight">5 de mayo</span>, te quiero preguntar algo muy especial...
+      </div>
     </div>
+
+    <!-- Título y texto debajo, ocultos al inicio -->
+    <div class="title-section" id="titleSection">
+      <h1>Te quiero mostrar a la mujer más hermosa de este mundo 💜</h1>
+      <p>Para preguntarte algo muy importante...</p>
+    </div>
+
+    <!-- Carrusel de fotos, oculto al inicio -->
+    <div class="carousel" id="carousel">
+      <img src="img/img1.jpeg" class="active" alt="Foto 1" />
+      <img src="img/img2.jpeg" alt="Foto 2" />
+      <img src="img/img3.jpeg" alt="Foto 3" />
+      <!-- Puedes agregar más fotos aquí -->
+    </div>
+
+    <!-- Botón para avanzar, siempre visible -->
     <button id="nextBtn">Siguiente</button>
+
   </div>
 
-  <!-- 💖 PREGUNTA FINAL -->
+  <!-- Sección de pregunta, oculta al inicio -->
   <div class="question-section" id="pregunta">
     <h1>¿Quieres ser mi novia? 💖</h1>
     <div class="buttons">
@@ -150,23 +263,46 @@
   </div>
 
   <script>
-    const images = document.querySelectorAll('.carousel img');
+    const phrases = document.querySelectorAll('#phrases > div');
+    const titleSection = document.getElementById('titleSection');
+    const carousel = document.getElementById('carousel');
+    const images = carousel.querySelectorAll('img');
     const nextBtn = document.getElementById('nextBtn');
     const pregunta = document.getElementById('pregunta');
-    let current = 0;
+
+    let step = 0; // Contador para frases y fotos
 
     nextBtn.addEventListener('click', () => {
-      if (current < images.length - 1) {
-        images[current].classList.remove('active');
-        current++;
-        images[current].classList.add('active');
-      } else {
-        // Oculta carrusel y muestra la pregunta
-        document.querySelector('.container').style.display = 'none';
-        pregunta.style.display = 'block';
+      if(step < phrases.length - 1){
+        // Pasar a la siguiente frase con efecto
+        phrases[step].classList.remove('active');
+        step++;
+        phrases[step].classList.add('active');
+      } else if(step === phrases.length - 1){
+        // Última frase vista, ocultar frases y mostrar título + fotos
+        document.getElementById('phrases').style.display = 'none';
+        titleSection.style.display = 'block';
+        carousel.style.display = 'flex';
+        step++;
+        // Mostrar primera imagen
+        images.forEach(img => img.classList.remove('active'));
+        images[0].classList.add('active');
+      } else if(step >= phrases.length){
+        // Mostrar imágenes secuencialmente
+        let imgIndex = step - phrases.length;
+        if(imgIndex < images.length - 1){
+          images[imgIndex].classList.remove('active');
+          images[imgIndex + 1].classList.add('active');
+          step++;
+        } else {
+          // Terminar con pregunta
+          document.querySelector('.container').style.display = 'none';
+          pregunta.style.display = 'block';
+        }
       }
     });
 
+    // Botones "Sí" y "No"
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const mensaje = document.getElementById('mensaje');
@@ -177,9 +313,10 @@
 
     noBtn.addEventListener('mouseover', () => {
       noBtn.style.position = 'absolute';
-      noBtn.style.top = Math.random() * window.innerHeight + "px";
-      noBtn.style.left = Math.random() * window.innerWidth + "px";
+      noBtn.style.top = Math.random() * (window.innerHeight - noBtn.offsetHeight) + "px";
+      noBtn.style.left = Math.random() * (window.innerWidth - noBtn.offsetWidth) + "px";
     });
   </script>
+
 </body>
 </html>
