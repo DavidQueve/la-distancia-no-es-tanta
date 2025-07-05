@@ -13,28 +13,41 @@
       padding: 0;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+    h1, h2 {
       color: #6a0dad;
     }
 
+    .intro {
+      padding: 50px 20px 0;
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.4rem;
+      line-height: 1.8;
+      color: #4b0082;
+    }
+
     .container {
-      margin-top: 60px;
+      margin-top: 30px;
     }
 
     .carousel {
-      max-width: 90%;
+      max-width: 100%;
       margin: auto;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 380px;
     }
 
     .carousel img {
       width: 300px;
       height: auto;
       border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       display: none;
+      transition: opacity 0.5s ease;
     }
 
     .carousel img.active {
@@ -50,6 +63,11 @@
       background-color: #c084fc;
       color: white;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(192, 132, 252, 0.5);
+    }
+
+    #nextBtn:hover {
+      background-color: #a855f7;
     }
 
     .question-section {
@@ -97,17 +115,31 @@
   </style>
 </head>
 <body>
+
+  <!-- ✨ INTRO CON FRASE ROMÁNTICA -->
+  <div class="intro">
+    <h2>Desde Panamá hasta Venezuela... 💌</h2>
+    <p>
+      Aunque nos separan kilómetros de distancia, nada se compara con lo que nos une.  
+      Cada palabra, cada mirada por videollamada, cada risa compartida ha hecho que mi amor por ti crezca más allá de fronteras.
+      <br><br>
+      Hoy quiero compartirte algo especial... nuestros momentos 🥰
+    </p>
+  </div>
+
+  <!-- 💜 CARRUSEL DE FOTOS -->
   <div class="container">
     <h1>Nuestros momentos 💜</h1>
     <div class="carousel">
       <img src="img/img1.jpeg" class="active" alt="Foto 1">
       <img src="img/img2.jpeg" alt="Foto 2">
       <img src="img/img3.jpeg" alt="Foto 3">
-      <!-- Agrega más fotos si deseas -->
+      <!-- Puedes añadir más fotos aquí -->
     </div>
-    <button id="nextBtn">Ver la pregunta</button>
+    <button id="nextBtn">Siguiente</button>
   </div>
 
+  <!-- 💖 PREGUNTA FINAL -->
   <div class="question-section" id="pregunta">
     <h1>¿Quieres ser mi novia? 💖</h1>
     <div class="buttons">
@@ -123,20 +155,18 @@
     const pregunta = document.getElementById('pregunta');
     let current = 0;
 
-    // Mostrar fotos una a una al hacer clic hasta llegar a la última
     nextBtn.addEventListener('click', () => {
       if (current < images.length - 1) {
         images[current].classList.remove('active');
         current++;
         images[current].classList.add('active');
       } else {
-        // Ya vio todas las fotos
+        // Oculta carrusel y muestra la pregunta
         document.querySelector('.container').style.display = 'none';
         pregunta.style.display = 'block';
       }
     });
 
-    // Botones de la pregunta
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const mensaje = document.getElementById('mensaje');
