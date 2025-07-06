@@ -3,320 +3,311 @@
 <head>
   <meta charset="UTF-8" />
   <title>¿Quieres ser mi novia?</title>
-
-  <!-- Fuente romántica de Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
+  <meta name="description" content="Propuesta romántica para Mau, desde Panamá a Venezuela" />
+  <meta name="author" content="David Quevedo" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       font-family: 'Dancing Script', cursive;
-      background: linear-gradient(135deg, #e6ccff 0%, #ffffff 100%);
-      color: #5e2a84;
+      background: linear-gradient(135deg, #e9dbff, #f5f0ff);
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    body {
-      min-height: 100vh;
+    #backgroundCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .container {
+      position: relative;
       max-width: 800px;
-      width: 100%;
+      margin: auto;
       padding: 20px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 60vh;
-      background: #f0e6ffcc;
-      border-radius: 20px;
-      box-shadow: 0 0 30px #b993f8aa;
-      user-select: none;
+      z-index: 10;
       text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
     }
 
-    .phrases {
-      width: 100%;
-      font-size: 2rem;
-      line-height: 1.4;
-      color: #4b0082;
-      padding: 30px 20px;
-      border-radius: 15px;
-      background: #ffffffcc;
-      box-shadow: 0 0 20px #b993f8aa;
-      min-height: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-    }
-
-    .phrases > div {
+    .phrases div {
       display: none;
-      max-width: 650px;
-      color: #4b0082; /* asegurar color visible */
-      font-weight: 400; /* normal base */
+      font-size: 1.5rem;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      white-space: nowrap;
     }
 
-    .phrases > div.active {
+    .phrases div.active {
       display: block;
-      opacity: 1;
-      transition: opacity 0.8s ease;
+      animation: fadeInUp 1s ease;
     }
 
-    .title-section {
+    #nextBtn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1.5rem;
+      border: none;
+      border-radius: 20px;
+      background-color: #b9a7ff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    .title-section, .carousel, .question-section, #finalMessage {
       display: none;
       margin-top: 30px;
-      text-align: center;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .title-section h1 {
-      margin-bottom: 5px;
-      color: #6a0dad;
-      font-size: 2.8rem;
-    }
-
-    .title-section p {
-      font-size: 1.5rem;
-      color: #6a0dad;
-      margin-top: 0;
-      margin-bottom: 40px;
-      font-weight: 600;
     }
 
     .carousel {
-      max-width: 100%;
-      margin: auto;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      min-height: 300px;
-      display: none;
-      animation: fadeIn 1s ease forwards;
+      gap: 20px;
     }
 
     .carousel img {
       width: 300px;
       height: auto;
       border-radius: 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
       display: none;
-      opacity: 0;
-      transition: opacity 0.8s ease;
+      margin: 0 auto;
     }
 
     .carousel img.active {
       display: block;
-      opacity: 1;
-    }
-
-    #nextBtn {
-      margin-top: 30px;
-      padding: 14px 32px;
-      font-size: 1.6rem;
-      border: none;
-      border-radius: 25px;
-      background-color: #c084fc;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(192, 132, 252, 0.8);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      user-select: none;
-    }
-
-    #nextBtn:hover {
-      background-color: #a855f7;
-      transform: scale(1.05);
-    }
-
-    .question-section {
-      display: none;
-      margin-top: 60px;
-      text-align: center;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .question-section h1 {
-      font-size: 3rem;
-      color: #7e22ce;
-      margin-bottom: 20px;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 30px;
+      gap: 20px;
+    }
+
+    .buttons button {
+      font-size: 1.5rem;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    #yesBtn { background: #b9a7ff; color: white; }
+    #noBtn { background: #d8c4fe; color: #5e2a84; position: relative; }
+
+    #mensaje, #finalMessage {
+      font-size: 1.5rem;
       margin-top: 20px;
     }
 
-    button {
-      font-size: 1.8rem;
-      padding: 14px 32px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: 0.3s;
-      user-select: none;
-      box-shadow: 0 4px 10px rgba(192, 132, 252, 0.5);
+    .highlight { font-weight: bold; color: #a47fff; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    #yesBtn {
-      background-color: #c084fc;
-      color: white;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
     }
 
-    #yesBtn:hover {
-      background-color: #a855f7;
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #5e2a84;
+      white-space: nowrap;
+      animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
+      width: 0;
+      display: inline-block;
     }
 
-    #noBtn {
-      background-color: #d8b4fe;
-      color: #5e2a84;
-      position: relative;
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: #5e2a84; }
     }
 
-    #mensaje {
-      margin-top: 40px;
-      font-size: 2rem;
-      color: #7e22ce;
-      font-weight: 700;
-      display: none;
+    #finalMessage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      white-space: normal;
+      margin-top: 20px;
     }
 
-    /* Negrita para palabras clave */
-    .highlight {
-      font-weight: 900;
-      color: #9b30ff;
-      text-shadow: 0 0 4px #c085fc88;
-    }
-
-    /* Animación fadeIn */
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    #finalMessage img {
+      width: 300px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
 <body>
-
+  <canvas id="backgroundCanvas"></canvas>
   <div class="container">
+    <!-- Avatar eliminado -->
 
-    <!-- Frases románticas que irán pasando -->
     <div class="phrases" id="phrases">
-      <div class="active">
-        Hola <span class="highlight">Mau</span>, desde Panamá hasta Venezuela...
-      </div>
-      <div>
-        Tu sonrisa es lo más <span class="highlight">hermoso</span> que he visto jamás.
-      </div>
-      <div>
-        Aunque estemos lejos, nuestro <span class="highlight">amor</span> es más grande que cualquier distancia.
-      </div>
-      <div>
-        Cada <span class="highlight">pensamiento</span> está contigo, y quiero compartir contigo nuestros momentos 🥰
-      </div>
-      <div>
-        Nuestro <span class="highlight">aniversario</span> es el <span class="highlight">7 de marzo</span> porque tan solo me tomó <span class="highlight">5 días</span> enamorarme de ti.
-      </div>
-      <div>
-        Hoy, <span class="highlight">5 de mayo</span>, te quiero preguntar algo muy especial...
-      </div>
+      <div class="active"><span class="typewriter">Hola <span class="highlight">Mau</span>, desde Panamá hasta Venezuela...</span></div>
+      <div><span class="typewriter">Tu <span class="highlight">sonrisa</span> es lo más <span class="highlight">hermoso</span> que he visto jamás.</span></div>
+      <div><span class="typewriter">Aunque estemos lejos, nuestro <span class="highlight">amor</span> es más grande que cualquier distancia.</span></div>
+      <div><span class="typewriter">Cada <span class="highlight">pensamiento</span> está contigo, y quiero compartir contigo nuestros recuerdos.</span></div>
+      <div><span class="typewriter">Nuestro aniversario es el <span class="highlight">7 de marzo</span> porque tan solo me tomó <span class="highlight">5 días</span> enamorarme de ti.</span></div>
+      <div><span class="typewriter">Hoy, <span class="highlight">5 de julio</span>, te quiero preguntar algo muy especial...</span></div>
     </div>
 
-    <!-- Título y texto debajo, ocultos al inicio -->
     <div class="title-section" id="titleSection">
-      <h1>Te quiero mostrar a la mujer más hermosa de este mundo 💜</h1>
-      <p>Para preguntarte algo muy importante...</p>
+      <h2><span class="typewriter">Te quiero mostrar a la mujer más hermosa de este mundo 💜</span></h2>
+      <p><span class="typewriter">Y esa mujer hermosa debe contestar a una pregunta muy importante...</span></p>
     </div>
 
-    <!-- Carrusel de fotos, oculto al inicio -->
     <div class="carousel" id="carousel">
-      <img src="img/img1.jpeg" class="active" alt="Foto 1" />
+      <img src="img/img0.jpeg" class="active" alt="Foto inicial" />
+      <img src="img/img1.jpeg" alt="Foto 1" />
       <img src="img/img2.jpeg" alt="Foto 2" />
       <img src="img/img3.jpeg" alt="Foto 3" />
-      <!-- Puedes agregar más fotos aquí -->
+      <img src="img/img5.jpeg" alt="Foto final sexy" />
     </div>
 
-    <!-- Botón para avanzar, siempre visible -->
     <button id="nextBtn">Siguiente</button>
-
   </div>
 
-  <!-- Sección de pregunta, oculta al inicio -->
   <div class="question-section" id="pregunta">
-    <h1>¿Quieres ser mi novia? 💖</h1>
+    <h1><span class="typewriter">¿Quieres ser mi novia? 💖</span></h1>
     <div class="buttons">
       <button id="yesBtn">Sí</button>
       <button id="noBtn">No</button>
     </div>
-    <div id="mensaje">¡Sabía que dirías que sí! 💘</div>
+  </div>
+
+  <div id="finalMessage" style="display: none;">
+    <img src="img/img5.jpeg" alt="Imagen final" />
+    <div class="typewriter">Porque me amas un pocotónnnnn 💜, como yo a ti.</div>
   </div>
 
   <script>
+    const canvas = document.getElementById('backgroundCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = 1 + Math.random() * 3;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = 0.05 + Math.random() * 0.18;
+        this.color = `rgba(196, 172, 229, ${this.opacity})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0 || this.x > width) this.speedX *= -1;
+        if(this.y < 0 || this.y > height) this.speedY *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const particles = Array.from({length: 150}, () => new Particle());
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
     const phrases = document.querySelectorAll('#phrases > div');
     const titleSection = document.getElementById('titleSection');
     const carousel = document.getElementById('carousel');
     const images = carousel.querySelectorAll('img');
     const nextBtn = document.getElementById('nextBtn');
     const pregunta = document.getElementById('pregunta');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const finalMessage = document.getElementById('finalMessage');
 
-    let step = 0; // Contador para frases y fotos
+    let step = 0;
 
     nextBtn.addEventListener('click', () => {
       if(step < phrases.length - 1){
-        // Pasar a la siguiente frase con efecto
         phrases[step].classList.remove('active');
         step++;
         phrases[step].classList.add('active');
       } else if(step === phrases.length - 1){
-        // Última frase vista, ocultar frases y mostrar título + fotos
         document.getElementById('phrases').style.display = 'none';
         titleSection.style.display = 'block';
-        carousel.style.display = 'flex';
-        step++;
-        // Mostrar primera imagen
-        images.forEach(img => img.classList.remove('active'));
+        carousel.style.display = 'block';
         images[0].classList.add('active');
-      } else if(step >= phrases.length){
-        // Mostrar imágenes secuencialmente
+        step++;
+      } else if(step >= phrases.length && step < phrases.length + 3){
         let imgIndex = step - phrases.length;
-        if(imgIndex < images.length - 1){
-          images[imgIndex].classList.remove('active');
-          images[imgIndex + 1].classList.add('active');
-          step++;
-        } else {
-          // Terminar con pregunta
-          document.querySelector('.container').style.display = 'none';
-          pregunta.style.display = 'block';
-        }
+        images[imgIndex].classList.remove('active');
+        images[imgIndex+1].classList.add('active');
+        step++;
+      } else if(step === phrases.length + 3){
+        carousel.style.display = 'none';
+        titleSection.style.display = 'none';
+        pregunta.style.display = 'block';
+        nextBtn.style.display = 'none';
       }
     });
 
-    // Botones "Sí" y "No"
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    const mensaje = document.getElementById('mensaje');
-
     yesBtn.addEventListener('click', () => {
-      mensaje.style.display = 'block';
+      images.forEach(img => img.classList.remove('active'));
+      images[images.length - 1].classList.add('active');
+      finalMessage.style.display = 'block';
+      pregunta.style.display = 'none';
     });
 
     noBtn.addEventListener('mouseover', () => {
       noBtn.style.position = 'absolute';
-      noBtn.style.top = Math.random() * (window.innerHeight - noBtn.offsetHeight) + "px";
-      noBtn.style.left = Math.random() * (window.innerWidth - noBtn.offsetWidth) + "px";
+      noBtn.style.top = Math.random() * window.innerHeight + "px";
+      noBtn.style.left = Math.random() * window.innerWidth + "px";
     });
   </script>
-
 </body>
 </html>
